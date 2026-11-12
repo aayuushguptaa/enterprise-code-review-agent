@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Review Report</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px;
+      background: #f8f9fa;
+      color: #212529;
+    }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 12px; }
+    .summary {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin: 24px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+    .metric { text-align: center; }
+    .metric-value { font-size: 2em; font-weight: bold; color: #3498db; }
+    .metric-label { color: #6c757d; font-size: 0.9em; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 12px; margin: 8px 0; border-radius: 4px; background: white; }
+    .rec-critical { border-left: 4px solid #e74c3c; }
+    .rec-high { border-left: 4px solid #f39c12; }
+    .rec-medium { border-left: 4px solid #3498db; }
+    .rec-low { border-left: 4px solid #27ae60; }
+    .priority { font-weight: bold; margin-right: 8px; }
+    .rec-critical .priority { color: #e74c3c; }
+    .rec-high .priority { color: #f39c12; }
+    .rec-medium .priority { color: #3498db; }
+    .rec-low .priority { color: #27ae60; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 4px; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e9ecef; }
+    th { color: #6c757d; font-size: 0.85em; text-transform: uppercase; }
+    footer { text-align: center; color: #6c757d; margin-top: 32px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Code Review Report</h1>
+  <p><strong>Pull request:</strong> udacity/cd14715-simple-todo-app#2</p>
+  
+  <div class="summary">
+    <div class="metric">
+      <div class="metric-value">22</div>
+      <div class="metric-label">Overall Score</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">1</div>
+      <div class="metric-label">Files Reviewed</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">3</div>
+      <div class="metric-label">Critical Issues</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">9</div>
+      <div class="metric-label">Tests Needed</div>
+    </div>
+    <div class="metric">
+      <div class="metric-value">6</div>
+      <div class="metric-label">Refactorings</div>
+    </div>
+  </div>
+
+  <h2>🎯 Top Recommendations</h2>
+  <ul>
+      <li class="rec-critical">
+        <span class="priority">[CRITICAL]</span>
+        <strong>Security</strong>: Fix three SQL injection vulnerabilities in searchTodos, searchTodosByStatus, and getTodosByUser functions. These allow arbitrary SQL execution and must be remediated immediately by replacing string concatenation/interpolation with parameterized queries.
+        <br><small>Files: src/todo.ts</small>
+      </li>
+    
+      <li class="rec-critical">
+        <span class="priority">[CRITICAL]</span>
+        <strong>Testing</strong>: Add security tests to verify SQL injection vulnerabilities are fixed. Test the three vulnerable search functions with malicious payloads to ensure parameterized queries prevent exploitation.
+        <br><small>Files: src/todo.ts</small>
+      </li>
+    
+      <li class="rec-critical">
+        <span class="priority">[CRITICAL]</span>
+        <strong>Testing</strong>: Add comprehensive tests for database operations. Critical gaps include createTodo, getAllTodos, getTodoById, updateTodoStatus, and deleteTodo with no test coverage for database interactions or error handling.
+        <br><small>Files: src/todo.ts</small>
+      </li>
+    
+      <li class="rec-high">
+        <span class="priority">[HIGH]</span>
+        <strong>Security</strong>: Replace weak ID generation (Math.random + timestamp) with cryptographically secure randomUUID from crypto module to prevent IDOR attacks through ID enumeration.
+        <br><small>Files: src/todo.ts</small>
+      </li>
+    
+      <li class="rec-high">
+        <span class="priority">[HIGH]</span>
+        <strong>Security</strong>: Implement access control checks in all CRUD operations to verify users can only access, modify, or delete their own todos. Add userId validation to prevent unauthorized access.
+        <br><small>Files: src/todo.ts</small>
+      </li>
+    </ul>
+
+  <h2>📁 Files</h2>
+  <table>
+    <thead><tr><th>File</th><th>Score</th><th>Issues</th><th>Test gaps</th><th>Refactorings</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>src/todo.ts</code></td>
+        <td>22</td>
+        <td>13</td>
+        <td>17</td>
+        <td>6</td>
+      </tr></tbody>
+  </table>
+
+  <footer>
+    Generated at 2026-11-12T00:00:00.000Z • Duration: 199943ms
+  </footer>
+</body>
+</html>
